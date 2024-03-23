@@ -1,8 +1,11 @@
-using ArtsyApp.Data;
+﻿using ArtsyApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<ArtsyAppContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ArtsyAppContext") ?? throw new InvalidOperationException("Connection string 'ArtsyAppContext' not found.")));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
