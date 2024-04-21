@@ -21,6 +21,9 @@ body {
   margin-bottom: 60px;
 }
 
-.mb-header {
-    margin-bottom: 80px;
+.mg-login {
+    margin-top: 45px;
+    margin-left: 5%;
+    margin-right: 5%;
 }
+
