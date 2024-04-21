@@ -4,10 +4,10 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="container d-flex justify-content-center align-items-center mt-lg-5">
+<div class="container d-flex justify-content-center align-items-center">
     <div class="col-md-4 text-center">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h1>Create a new account.</h1>
+            <h1>Please create your account.</h1>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
@@ -25,7 +25,7 @@
                 <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg" style="background-color:lightgreen">Register</button>
         </form>
     </div>
 </div>
