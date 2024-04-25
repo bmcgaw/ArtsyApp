@@ -10,10 +10,10 @@ namespace ArtsyApp.Controllers
             return View();
         }
 
-        public IActionResult Welcome(string Jerry, int ID = 1)
+        public IActionResult Welcome(string name, int numHello = 1)
         {
-            ViewData["Jerry"] = "Jerry Seinfeld";
-            ViewData["ID"] = ID + 1;
+            ViewData["NumTimes"] = numHello;
+            ViewData["Message"] = $"Hello, {name}";
             return View();
         }
     }

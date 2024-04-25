@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ArtsyApp.Models;
 
 namespace ArtsyApp.Data
 {
@@ -9,5 +10,6 @@ namespace ArtsyApp.Data
             : base(options)
         {
         }
+        public DbSet<ArtsyApp.Models.ArtPost> ArtPost { get; set; } = default!;
     }
 }
