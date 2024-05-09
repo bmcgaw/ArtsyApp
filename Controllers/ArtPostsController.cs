@@ -26,7 +26,7 @@ namespace ArtsyApp.Controllers
         // GET: ArtPosts
         public async Task<IActionResult> Index()
         {
-            Console.WriteLine("Testing");
+            Console.WriteLine("Testing 123");
             return View(await _context.ArtPost.ToListAsync());
         }
 
