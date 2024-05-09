@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ArtsyApp.Data;
 using ArtsyApp.Models;
+using System.Security.Claims;
+using Microsoft.Extensions.Hosting;
 
 namespace ArtsyApp.Controllers
 {
     public class ArtPostsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ArtPostsController(ApplicationDbContext context)
+        public ArtPostsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: ArtPosts
@@ -54,13 +58,33 @@ namespace ArtsyApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Artist,PhotoUrl,Description")] ArtPost artPost)
+        public async Task<IActionResult> Create([Bind("Id,Title,Artist,ImagePath,Description")] ArtPost artPost, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(artPost);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (userId != null) artPost.UserId = userId;
+                artPost.PostDate = DateTime.Now;
+
+                if (imageFile != null || imageFile?.Length > 0)
+                {
+
+                    var imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                    var filePath = Path.Combine(imagesFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    artPost.ImagePath = filePath;
+
+                    _context.Add(artPost);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(artPost);
         }

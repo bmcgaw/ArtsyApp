@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.General;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Net;
 
 namespace ArtsyApp.Models
@@ -10,19 +11,15 @@ namespace ArtsyApp.Models
         public int Id { get; set; }
 
         [ScaffoldColumn(false)]
-        public int UserId { get; set; }
+        public string? UserId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter a title.")]
         public string? Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter an artist.")]
         public string? Artist { get; set; }
 
-        [Required]
-        [DisplayName("Photo URL")]
-        public string? PhotoUrl { get; set; }
-
-        [Required]
+        [Required(ErrorMessage = "Please enter a description")]
         public string? Description { get; set; }
 
         [ScaffoldColumn(false)]
@@ -30,5 +27,12 @@ namespace ArtsyApp.Models
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
 
         public DateTime PostDate { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string? ImagePath { get; set; }
+
+        [NotMapped]
+        [DisplayName("Image")]
+        public IFormFile? ImageFile { get; set; }
     }
 }
