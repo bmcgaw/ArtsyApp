@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ArtsyApp.Data;
+using ArtsyApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using ArtsyApp.Data;
-using ArtsyApp.Models;
-using System.Security.Claims;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace ArtsyApp.Controllers
 {
@@ -26,6 +26,7 @@ namespace ArtsyApp.Controllers
         // GET: ArtPosts
         public async Task<IActionResult> Index()
         {
+            Console.WriteLine("Testing");
             return View(await _context.ArtPost.ToListAsync());
         }
 
