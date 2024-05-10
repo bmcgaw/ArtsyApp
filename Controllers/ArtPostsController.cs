@@ -58,13 +58,12 @@ namespace ArtsyApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Artist,ImagePath,Description")] ArtPost artPost, IFormFile imageFile)
+        public async Task<IActionResult> Create([Bind("Id,UserId,Title,Artist,ImagePath,Description")] ArtPost artPost, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
 
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                if (userId != null) artPost.UserId = userId;
+                artPost.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 artPost.PostDate = DateTime.Now;
 
                 if (imageFile != null || imageFile?.Length > 0)
@@ -79,7 +78,7 @@ namespace ArtsyApp.Controllers
                         await imageFile.CopyToAsync(stream);
                     }
 
-                    artPost.ImagePath = filePath;
+                    artPost.ImagePath = "/images/" + fileName;
 
                     _context.Add(artPost);
                     await _context.SaveChangesAsync();
