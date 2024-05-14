@@ -165,6 +165,8 @@ namespace ArtsyApp.Controllers
             var artPost = await _context.ArtPost.FindAsync(id);
             if (artPost != null)
             {
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, artPost.ImagePath);
+                System.IO.File.Delete($"../ArtsyApp/wwwroot/{imagePath}");
                 _context.ArtPost.Remove(artPost);
             }
 
