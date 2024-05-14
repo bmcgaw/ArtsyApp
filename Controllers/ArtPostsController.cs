@@ -157,7 +157,7 @@ namespace ArtsyApp.Controllers
             return View(artPost);
         }
 
-        // POST: ArtPosts/Delete/5
+        // POST: ArtPosts/Delete/4
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
