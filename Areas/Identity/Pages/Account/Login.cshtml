@@ -5,8 +5,8 @@
     ViewData["Title"] = "Welcome back!";
 }
 
-<div class="d-flex justify-content-evenly mg-login">
-    <div class="col-md-4">
+<div class="d-flex justify-content-evenly mg-login text-center">
+    <div class="col-md-4 custom-w-75">
         <section>
             <h1 class="mb-0">@ViewData["Title"]</h1>
             <form id="account" method="post">
@@ -46,8 +46,8 @@
             </form>
         </section>
     </div>
-    <div class="d-none d-md-block">
-        <img class="max-width-75 h-75" src="@Url.Content("~/images/abstractlogin.png")" alt="Your Photo">
+    <div style="max-width:50%; " class="d-none d-md-block d-md-flex align-items-center">
+        <img class="max-width-75 h-75 img-fluid" src="@Url.Content("~/images/abstractlogin.png")" alt="Your Photo">
     </div>
 </div>
 

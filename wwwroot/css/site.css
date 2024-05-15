@@ -27,3 +27,11 @@ body {
     margin-right: 5%;
 }
 
+@media (max-width: 576px) {
+
+    .custom-w-75 {
+        width: 75%;
+    }
+}
+
+
