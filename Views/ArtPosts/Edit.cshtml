@@ -6,29 +6,40 @@
 
 <h1>Edit</h1>
 
-<h4>ArtPost</h4>
+<h4>Art Post</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <input type="hidden" asp-for="UserId" />
+            <input type="hidden" asp-for="ImagePath" />
+            <input type="hidden" asp-for="ImageFileName" />
+            <input type="hidden" asp-for="PostDate" />
+            <div class="form-group mb-2">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="Artist" class="control-label"></label>
                 <input asp-for="Artist" class="form-control" />
                 <span asp-validation-for="Artist" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="form-control" />
+            @if (Model.ImagePath != null)
+            {
+                <div class="form-group mb-2">
+                    <label>Current Image</label>
+                    <img src="@Model.ImagePath" alt="Current Image" class="w-75 h-75" />
+                </div>
+            }
+            <div class="form-group mb-2">
+                <label asp-for="ImageFile" class="control-label mb-1">Upload Image (If left empty current image will be kept)</label>
+                <input asp-for="ImageFile" type="file" class="form-control" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
                 <label asp-for="Description" class="control-label"></label>
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger"></span>

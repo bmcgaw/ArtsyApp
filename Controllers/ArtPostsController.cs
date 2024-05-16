@@ -58,7 +58,7 @@ namespace ArtsyApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserId,Title,Artist,ImagePath,Description")] ArtPost artPost, IFormFile imageFile)
+        public async Task<IActionResult> Create([Bind("Id,UserId,Title,Artist,ImagePath,ImageFileName,PostDate,Description")] ArtPost artPost, IFormFile imageFile)
         {
             if (ModelState.IsValid)
             {
@@ -78,6 +78,7 @@ namespace ArtsyApp.Controllers
                         await imageFile.CopyToAsync(stream);
                     }
 
+                    artPost.ImageFileName = fileName;
                     artPost.ImagePath = "/images/" + fileName;
 
                     _context.Add(artPost);
@@ -109,7 +110,7 @@ namespace ArtsyApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Artist,PhotoUrl,Description")] ArtPost artPost)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Title,Artist,ImagePath,ImageFileName,PostDate,Description")] ArtPost artPost, IFormFile? imageFile)
         {
             if (id != artPost.Id)
             {
@@ -118,6 +119,25 @@ namespace ArtsyApp.Controllers
 
             if (ModelState.IsValid)
             {
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, artPost.ImagePath);
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var imagesFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+                    var fileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(imageFile.FileName);
+                    var filePath = Path.Combine(imagesFolder, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    artPost.ImageFileName = fileName;
+                    artPost.ImagePath = "/images/" + fileName;
+
+                    System.IO.File.Delete($"../ArtsyApp/wwwroot/{imagePath}");
+                    _context.ArtPost.Remove(artPost);
+                }
+
                 try
                 {
                     _context.Update(artPost);

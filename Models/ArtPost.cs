@@ -26,10 +26,14 @@ namespace ArtsyApp.Models
         [DataType(DataType.DateTime)]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true)]
 
+        [DisplayName("Post Date")]
         public DateTime PostDate { get; set; }
 
         [ScaffoldColumn(false)]
         public string? ImagePath { get; set; }
+
+        [ScaffoldColumn(false)]
+        public string? ImageFileName { get; set; }
 
         [NotMapped]
         [DisplayName("Image")]
