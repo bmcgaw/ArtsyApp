@@ -26,7 +26,9 @@
             @Html.DisplayNameFor(model => model.ImageFile)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ImageFile)
+            <div style="width: 200px; height: 200px;">
+                <img src="@Model.ImagePath" alt="Current Image" class="img-fluid rounded" />
+            </div>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
