@@ -29,6 +29,11 @@ namespace ArtsyApp.Controllers
             return View(await _context.ArtPost.ToListAsync());
         }
 
+        public async Task<IActionResult> MainFeed()
+        {
+            return View(await _context.ArtPost.ToListAsync());
+        }
+
         // GET: ArtPosts/Details/5
         public async Task<IActionResult> Details(int? id)
         {

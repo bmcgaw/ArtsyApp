@@ -23,11 +23,6 @@ namespace ArtsyApp.Controllers
             return View();
         }
 
-        public async Task<IActionResult> MainFeed()
-        {
-            return View(await _context.ArtPost.ToListAsync());
-        }
-
         public IActionResult Privacy()
         {
             return View();
